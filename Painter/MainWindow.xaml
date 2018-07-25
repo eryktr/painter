@@ -4,9 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Painter"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Painter - v2.0" Height="600" Width="800"
+        Name="Window">
+    <DockPanel>
+        <Border BorderThickness="2" BorderBrush="Black">
+            <StackPanel Name="SideMenu" DockPanel.Dock="Left" Background="AntiqueWhite">
+                <StackPanel Name="SideButtons">
+                    <Button Margin="10" Width="50" Height="50" Click="CheckButton">
+                        <Image Source="img/moveIcon.png" />
+                    </Button>
+                    <Button Name="RectangleButton" Margin="10" Width="50" Height="50" Click="RectangleButton_OnClick">
+                        <Image Source="img/RectangleIcon.png" />
+                    </Button>
+                    <Button Margin="10" Width="50" Height="50" Click="CheckButton">
+                        <Image Source="img/CircleIcon.png" />
+                    </Button>
+
+                    <Button Margin="10" Width="50" Height="50" Click="CheckButton">
+                        <Image Source="img/PolygonIcon.png" />
+                    </Button>
+
+                    <Button Margin="10" Width="50" Height="50" Click="ChangeColorButton_OnClick">
+                        <Image Source="img/ChangeObjectColor.png" />
+                    </Button>
+
+                    <Button Margin="10" Width="50" Height="50" Click="SetColorButton_OnClick">
+                        <Image Source="img/ChangeColorIcon.png" />
+                    </Button>
+                </StackPanel>
+                <StackPanel>
+                    <Label Name="ColorLabel" Margin="10" Width="50" Height="50" />
+                </StackPanel>
+
+                
+            </StackPanel>
+        </Border>
+
+        <Canvas Name="MainCanvas" DockPanel.Dock="Right" Background="White">
+
+        </Canvas>
+    </DockPanel>
 </Window>
