@@ -43,6 +43,7 @@ namespace Painter.EventSetups
                 if (args.LeftButton == MouseButtonState.Pressed)
                 {
                     Canvas.Children.Remove(lastRectangle);
+                    MainWindow.Rectangles.Remove(lastRectangle);
                     var newX = args.GetPosition(Canvas).X;
                     var newY = args.GetPosition(Canvas).Y;
                     var r = new Rectangle
@@ -51,6 +52,7 @@ namespace Painter.EventSetups
                         Fill = new SolidColorBrush(MainWindow.CurrentColor)
                     };
                     Canvas.Children.Add(r);
+                    MainWindow.Rectangles.Add(r);
                     r.Width = (newX > _initX ? newX - _initX : _initX - newX);
                     r.Height = (newY > _initY ? newY - _initY : _initY - newY);
                     Canvas.SetLeft(r, Math.Min(_initX, newX));

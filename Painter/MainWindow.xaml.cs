@@ -26,6 +26,10 @@ namespace Painter
         public IEventSetup EventSetup { get; set; }
         public static Mode CurrentMode { get; set; } = Mode.None;
 
+        public static readonly List<Rectangle> Rectangles = new List<Rectangle>();
+        public static readonly List<Ellipse> Ellipses = new List<Ellipse>();
+        public static readonly List<Polygon> Polygons = new List<Polygon>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -95,7 +99,14 @@ namespace Painter
             CheckButton(sender, e);
             UpdateEventSetup();
         }
-        
+
+        private void MoveButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentMode = Mode.Moving;
+            CheckButton(sender, e);
+            UpdateEventSetup();
+        }
+
         private void AssignEvents()
         {
             EventSetup.SetupEvents();
@@ -117,6 +128,9 @@ namespace Painter
                     EventSetup = new PolygonEventSetup(MainCanvas);
                     break;
 
+                case Mode.Moving:
+                    EventSetup = new MoveEventSetup(MainCanvas);
+                    break;
             }
             AssignEvents();
         }

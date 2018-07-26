@@ -12,7 +12,7 @@
         <Border BorderThickness="2" BorderBrush="Black">
             <StackPanel Name="SideMenu" DockPanel.Dock="Left" Background="AntiqueWhite">
                 <StackPanel Name="SideButtons">
-                    <Button Margin="10" Width="50" Height="50" Click="CheckButton">
+                    <Button Margin="10" Width="50" Height="50" Click="MoveButton_OnClick">
                         <Image Source="img/moveIcon.png" />
                     </Button>
                     <Button Name="RectangleButton" Margin="10" Width="50" Height="50" Click="RectangleButton_OnClick">

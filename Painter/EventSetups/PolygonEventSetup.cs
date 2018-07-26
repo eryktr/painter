@@ -49,15 +49,11 @@ namespace Painter.EventSetups
             {
                 Points = new PointCollection(_points),
                 Fill = new SolidColorBrush(MainWindow.CurrentColor),
+                
             };
             Canvas.Children.Add(p);
+            MainWindow.Polygons.Add(p);
             _points.RemoveRange(0, _points.Count);
-
-
-
-
-
-
         }
     }
 }

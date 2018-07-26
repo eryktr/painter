@@ -66,6 +66,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EventSetups\CircleEventSetup.cs" />
+    <Compile Include="EventSetups\MoveEventSetup.cs" />
     <Compile Include="EventSetups\PolygonEventSetup.cs" />
     <Compile Include="EventSetups\RectangleEventSetup.cs" />
     <Compile Include="IEventSetup.cs" />

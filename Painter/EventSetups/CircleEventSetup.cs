@@ -45,6 +45,7 @@ namespace Painter.EventSetups
                 if (args.LeftButton == MouseButtonState.Pressed)
                 {
                     Canvas.Children.Remove(_lastCircle);
+                    MainWindow.Circles.Remove(_lastCircle);
                     var newPos = args.GetPosition(Canvas);
                     double newX = newPos.X;
                     double newY = newPos.Y;
@@ -61,6 +62,7 @@ namespace Painter.EventSetups
                     Canvas.SetTop(c, top);
                     Canvas.SetLeft(c, left);
                     Canvas.Children.Add(c);
+                    MainWindow.Circles.Add(c);
                     _lastCircle = c;
                 }
                 else
