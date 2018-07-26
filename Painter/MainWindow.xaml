@@ -18,11 +18,11 @@
                     <Button Name="RectangleButton" Margin="10" Width="50" Height="50" Click="RectangleButton_OnClick">
                         <Image Source="img/RectangleIcon.png" />
                     </Button>
-                    <Button Margin="10" Width="50" Height="50" Click="CheckButton">
+                    <Button Margin="10" Width="50" Height="50" Click="CircleButton_OnClick">
                         <Image Source="img/CircleIcon.png" />
                     </Button>
 
-                    <Button Margin="10" Width="50" Height="50" Click="CheckButton">
+                    <Button Margin="10" Width="50" Height="50" Click="PolygonButton_OnClick">
                         <Image Source="img/PolygonIcon.png" />
                     </Button>
 

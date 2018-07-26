@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Painter.EventSetups;
 using Xceed.Wpf.Toolkit;
 
 namespace Painter
@@ -21,9 +22,9 @@ namespace Painter
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Color CurrentColor { get; set; } = Colors.Black;
+        public static Color CurrentColor { get; set; } = Colors.Black;
         public IEventSetup EventSetup { get; set; }
-        public Mode CurrentMode { get; set; } = Mode.None;
+        public static Mode CurrentMode { get; set; } = Mode.None;
 
         public MainWindow()
         {
@@ -39,6 +40,7 @@ namespace Painter
             Button b = (Button) sender;
             b.BorderBrush = new SolidColorBrush(Colors.Blue);
             b.BorderThickness = new Thickness(2);
+
         }
 
         private void UncheckButtons(object sender, RoutedEventArgs e)
@@ -75,13 +77,48 @@ namespace Painter
 
         private void RectangleButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CheckButton(sender, e);
             CurrentMode = Mode.Rectangle;
+            CheckButton(sender, e);
+            UpdateEventSetup();
+        }
+        
+        private void CircleButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentMode = Mode.Circle;
+            CheckButton(sender, e);
+            UpdateEventSetup();
         }
 
+        private void PolygonButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentMode = Mode.Polygon;
+            CheckButton(sender, e);
+            UpdateEventSetup();
+        }
+        
         private void AssignEvents()
         {
+            EventSetup.SetupEvents();
+        }
 
+        private void UpdateEventSetup()
+        {
+            switch (CurrentMode)
+            {
+                case Mode.Rectangle:
+                    EventSetup = new RectangleEventSetup(MainCanvas);
+                    break;
+
+                case Mode.Circle:
+                    EventSetup = new CircleEventSetup(MainCanvas);
+                    break;
+
+                case Mode.Polygon:
+                    EventSetup = new PolygonEventSetup(MainCanvas);
+                    break;
+
+            }
+            AssignEvents();
         }
     }
 }
