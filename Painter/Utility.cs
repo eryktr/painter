@@ -84,5 +84,14 @@ namespace Painter
                 c.Children.Remove(handle);
             }
         }
+
+        public static void Translate(double dx, double dy, params Shape[] shapes)
+        {
+            foreach (var sh in shapes)
+            {
+                Canvas.SetLeft(sh, Canvas.GetLeft(sh) + dx);
+                Canvas.SetTop(sh, Canvas.GetTop(sh) + dy);
+            }
+        }
     }
 }

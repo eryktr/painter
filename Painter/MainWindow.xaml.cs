@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.Win32;
 using Painter.EventSetups;
 using Xceed.Wpf.Toolkit;
 
@@ -27,14 +19,14 @@ namespace Painter
         public IEventSetup EventSetup { get; set; }
         private static Mode currentMode = Mode.None;
         public delegate void ModeChangedEventHandler(object sender, RoutedEventArgs args);
-        public event ModeChangedEventHandler OnModeChanged;
+        public static event ModeChangedEventHandler ModeChanged;
         public static Mode CurrentMode
         {
             get => currentMode;
             set
             {
                 currentMode = value;
-                //OnModeChanged();
+                OnModeChanged();
             }
         }
 
@@ -145,6 +137,12 @@ namespace Painter
                     break;
             }
             AssignEvents();
+
+         }
+
+        protected static void OnModeChanged()
+        {
+            ModeChanged?.Invoke(null, new RoutedEventArgs());
         }
     }
 }
