@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using Painter.EventSetups;
 using Xceed.Wpf.Toolkit;
 
@@ -24,10 +25,21 @@ namespace Painter
     {
         public static Color CurrentColor { get; set; } = Colors.Black;
         public IEventSetup EventSetup { get; set; }
-        public static Mode CurrentMode { get; set; } = Mode.None;
+        private static Mode currentMode = Mode.None;
+        public delegate void ModeChangedEventHandler(object sender, RoutedEventArgs args);
+        public event ModeChangedEventHandler OnModeChanged;
+        public static Mode CurrentMode
+        {
+            get => currentMode;
+            set
+            {
+                currentMode = value;
+                //OnModeChanged();
+            }
+        }
 
         public static readonly List<Rectangle> Rectangles = new List<Rectangle>();
-        public static readonly List<Ellipse> Ellipses = new List<Ellipse>();
+        public static readonly List<Ellipse> Circles = new List<Ellipse>();
         public static readonly List<Polygon> Polygons = new List<Polygon>();
 
         public MainWindow()
@@ -41,7 +53,7 @@ namespace Painter
         private void CheckButton(object sender, RoutedEventArgs e)
         {
             UncheckButtons(this, e);
-            Button b = (Button) sender;
+            var b = (Button) sender;
             b.BorderBrush = new SolidColorBrush(Colors.Blue);
             b.BorderThickness = new Thickness(2);
 
@@ -60,8 +72,8 @@ namespace Painter
         private void SetColorButton_OnClick(object sender, RoutedEventArgs e)
         {
             CheckButton(sender, e);
-            Button senderBtn = (Button) sender;
-            ColorPicker cp = new ColorPicker();
+            var senderBtn = (Button) sender;
+            var cp = new ColorPicker();
             cp.IsOpen = true;
             cp.SelectedColor = CurrentColor;
             MainCanvas.Children.Add(cp);

@@ -47,10 +47,10 @@ namespace Painter.EventSetups
                     Canvas.Children.Remove(_lastCircle);
                     MainWindow.Circles.Remove(_lastCircle);
                     var newPos = args.GetPosition(Canvas);
-                    double newX = newPos.X;
-                    double newY = newPos.Y;
-                    double radius = Math.Sqrt((newX - _initX) * (newX - _initX) + (newY - _initY) * (newY - _initY));
-                    Ellipse c = new Ellipse
+                    var newX = newPos.X;
+                    var newY = newPos.Y;
+                    var radius = Math.Sqrt((newX - _initX) * (newX - _initX) + (newY - _initY) * (newY - _initY));
+                    var c = new Ellipse
                     {
                         Height = radius,
                         Width = radius,
