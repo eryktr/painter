@@ -87,11 +87,20 @@ namespace Painter
 
         public static void Translate(double dx, double dy, params Shape[] shapes)
         {
+            if (shapes == null) return;
             foreach (var sh in shapes)
             {
+                if (sh == null) continue;
                 Canvas.SetLeft(sh, Canvas.GetLeft(sh) + dx);
                 Canvas.SetTop(sh, Canvas.GetTop(sh) + dy);
             }
+        }
+
+        public static void TranslatePolygon(double dx, double dy, Polygon pol, Rectangle bound)
+        {
+            TranslateTransform translate = new TranslateTransform(pol.RenderTransform.Value.OffsetX + dx, pol.RenderTransform.Value.OffsetY + dy);
+            //Translate(dx, dy, bound);
+            pol.RenderTransform = translate;
         }
     }
 }

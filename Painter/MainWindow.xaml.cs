@@ -38,6 +38,7 @@ namespace Painter
         {
             InitializeComponent();
             ColorLabel.Background = new SolidColorBrush(CurrentColor);
+            MainCanvas.ClipToBounds = true;
         }
 
 

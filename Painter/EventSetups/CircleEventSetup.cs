@@ -22,6 +22,7 @@ namespace Painter.EventSetups
 
         public CircleEventSetup(Canvas c)
         {
+            MainWindow.ModeChanged += OnModeChanged;
             Canvas = c;
         }
 
@@ -71,7 +72,12 @@ namespace Painter.EventSetups
                     Canvas.MouseMove -= DrawCircle;
                 }
             }
+
         }
 
+        public void OnModeChanged(object sender, RoutedEventArgs e)
+        {
+            Canvas.MouseLeftButtonDown -= Draw;
+        }
     }
 }

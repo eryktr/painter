@@ -54,6 +54,7 @@ namespace Painter.EventSetups
             Canvas.Children.Add(p);
             MainWindow.Polygons.Add(p);
             _points.RemoveRange(0, _points.Count);
+            Canvas.Children.Remove(_polyline);
         }
     }
 }

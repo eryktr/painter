@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -25,7 +26,7 @@ namespace Painter.EventSetups
 
         public void SetupEvents()
         {
-
+            MainWindow.ModeChanged += OnModeChanged;
             Canvas.MouseLeftButtonDown += Draw;
         }
 
@@ -65,6 +66,11 @@ namespace Painter.EventSetups
                     Canvas.MouseMove -= DrawRectangle;
                 }
             }
+        }
+
+        public void OnModeChanged(object sender, RoutedEventArgs e)
+        {
+            Canvas.MouseLeftButtonDown -= Draw;
         }
     }
 }

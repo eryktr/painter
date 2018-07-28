@@ -24,9 +24,11 @@ namespace Painter.EventSetups
             get => _currentlySelected;
             set
             {
-                if (_currentlySelected != null) _currentlySelected.MouseLeftButtonDown -= Move;
+                if (_currentlySelected != null && !(_currentlySelected is Polygon)) _currentlySelected.MouseLeftButtonDown -= Move;
+                if (_currentlySelected is Polygon) _currentlySelected.MouseLeftButtonDown -= MovePolygon;
                 _currentlySelected = value;
-                if (_currentlySelected != null) _currentlySelected.MouseLeftButtonDown += Move;
+                if (_currentlySelected != null && !(_currentlySelected is Polygon)) _currentlySelected.MouseLeftButtonDown += Move;
+                if(_currentlySelected is Polygon) _currentlySelected.MouseLeftButtonDown += MovePolygon;
             }
         }
 
@@ -85,10 +87,22 @@ namespace Painter.EventSetups
 
         public void MarkPolygon(object sender, MouseButtonEventArgs e)
         {
+            Utility.RemoveSelection(Canvas, _currentRectangle, _currentHandles);
             if (MainWindow.CurrentMode != Mode.Moving) return;
             var pol = (Polygon) sender;
             var r = Utility.FindPolygonBoundary(pol);
+            CurrentlySelected = pol;
+            r.RenderTransform = pol.RenderTransform;
+            _currentRectangle = r;
             Canvas.Children.Add(r);
+
+            MouseButtonEventHandler Unmark = (o, args) =>
+            {
+                Utility.RemoveSelection(Canvas, _currentRectangle, _currentHandles);
+                CurrentlySelected = null;
+            };
+
+            Canvas.MouseRightButtonDown += Unmark;
         }
 
         public void OnModeChanged(object sender, RoutedEventArgs e)
@@ -156,10 +170,37 @@ namespace Painter.EventSetups
             };
             sh.MouseMove += translate;
 
-            sh.PreviewMouseLeftButtonUp += (o, args) =>
+            sh.MouseLeftButtonUp += (o, args) =>
             {
-                MessageBox.Show(":");
                 sh.MouseMove -= translate;
+            };
+        }
+
+        public void MovePolygon(object sender, MouseButtonEventArgs e)
+        {
+            if (MainWindow.CurrentMode != Mode.Moving) return;
+            var pol = (Polygon)sender;
+            var p = e.GetPosition(Canvas);
+            _initX = p.X;
+            _initY = p.Y;
+            MouseEventHandler translate = (o, args) =>
+            {
+                if (args.LeftButton != MouseButtonState.Pressed) return;
+                var p2 = args.GetPosition(Canvas);
+                var newX = p2.X;
+                var newY = p2.Y;
+                var dx = newX - _initX;
+                var dy = newY - _initY;
+                Utility.TranslatePolygon(dx, dy, pol,_currentRectangle);
+                _currentRectangle.RenderTransform = pol.RenderTransform;
+                _initX = newX;
+                _initY = newY;
+            };
+            pol.MouseMove += translate;
+
+            pol.MouseLeftButtonUp += (o, args) =>
+            {
+                pol.MouseMove -= translate;
             };
         }
     }
