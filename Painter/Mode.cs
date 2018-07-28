@@ -6,7 +6,7 @@
         Rectangle,
         Circle,
         Polygon,
-        ChangeColor,
+        SetColor,
         None
     }
 }

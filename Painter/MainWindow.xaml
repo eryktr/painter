@@ -26,7 +26,7 @@
                         <Image Source="img/PolygonIcon.png" />
                     </Button>
 
-                    <Button Margin="10" Width="50" Height="50" Click="ChangeColorButton_OnClick">
+                    <Button Margin="10" Width="50" Height="50" Click="SetObjectColorButton_OnClick">
                         <Image Source="img/ChangeObjectColor.png" />
                     </Button>
 

@@ -112,6 +112,14 @@ namespace Painter
             UpdateEventSetup();
         }
 
+        private void SetObjectColorButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentMode = Mode.SetColor;
+            CheckButton(sender, e);
+            UpdateEventSetup();
+
+        }
+
         private void AssignEvents()
         {
             EventSetup.SetupEvents();
@@ -135,6 +143,10 @@ namespace Painter
 
                 case Mode.Moving:
                     EventSetup = new MoveEventSetup(MainCanvas);
+                    break;
+
+                case Mode.SetColor:
+                    EventSetup = new SetColorEventSetup(MainCanvas);
                     break;
             }
             AssignEvents();
