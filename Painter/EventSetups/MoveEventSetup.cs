@@ -54,13 +54,20 @@ namespace Painter.EventSetups
                 Utility.RemoveSelection(Canvas, _currentRectangle, _currentHandles);
 
                 var sh = (Shape) sender;
+                Panel.SetZIndex(sh, Int32.MaxValue);
+                foreach (Shape shape in Canvas.Children)
+                {
+                    if (Equals(shape, sh)) continue;
+                    Panel.SetZIndex(shape, Int32.MinValue);
+                }
                 var r = new Rectangle
                 {
                     Width = sh.ActualWidth,
                     Height = sh.ActualHeight,
                     Stroke = new SolidColorBrush(Colors.Black),
-                    StrokeDashArray = new DoubleCollection(new double[] {4, 2})
+                    StrokeDashArray = new DoubleCollection(new double[] {4, 2}),
                 };
+                Panel.SetZIndex(r, Int32.MaxValue);
                 Canvas.SetLeft(r, Canvas.GetLeft(sh));
                 Canvas.SetTop(r, Canvas.GetTop(sh));
                 Canvas.Children.Add(r);
@@ -69,6 +76,7 @@ namespace Painter.EventSetups
                 foreach (var rec in rects)
                 {
                     Canvas.Children.Add(rec);
+                    Panel.SetZIndex(rec, Int32.MaxValue);
                 }
 
                 CurrentlySelected = sh;

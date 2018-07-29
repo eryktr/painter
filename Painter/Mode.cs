@@ -7,6 +7,8 @@
         Circle,
         Polygon,
         SetColor,
+        ChangeColor,
+        Delete,
         None
     }
 }

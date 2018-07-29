@@ -57,6 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="EventSetups\ChangeColorEventSetup.cs" />
+    <Compile Include="EventSetups\DeleteEventSetup.cs" />
     <Compile Include="EventSetups\SetColorEventSetup.cs" />
     <Compile Include="Utility.cs" />
     <Page Include="MainWindow.xaml">
@@ -115,6 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\ChangeObjectColor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\DeleteIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

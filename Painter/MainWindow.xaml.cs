@@ -15,7 +15,18 @@ namespace Painter
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static Color CurrentColor { get; set; } = Colors.Black;
+        private static Color _currentColor = Colors.Black;
+        private static Label _colorLabel;
+
+        public static Color CurrentColor
+        {
+            get => _currentColor;
+            set 
+            {
+                _currentColor = value;
+                OnColorChanged(_colorLabel);
+            }
+        } 
         public IEventSetup EventSetup { get; set; }
         private static Mode currentMode = Mode.None;
         public delegate void ModeChangedEventHandler(object sender, RoutedEventArgs args);
@@ -39,6 +50,7 @@ namespace Painter
             InitializeComponent();
             ColorLabel.Background = new SolidColorBrush(CurrentColor);
             MainCanvas.ClipToBounds = true;
+            _colorLabel = ColorLabel;
         }
 
 
@@ -62,26 +74,11 @@ namespace Painter
             }
         }
 
-        private void SetColorButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            CheckButton(sender, e);
-            var senderBtn = (Button) sender;
-            var cp = new ColorPicker();
-            cp.IsOpen = true;
-            cp.SelectedColor = CurrentColor;
-            MainCanvas.Children.Add(cp);
-            Canvas.SetLeft(cp, 200);
-            cp.SelectedColorChanged += (o, args) =>
-            {
-                CurrentColor = cp.SelectedColor.Value;
-                MainCanvas.Children.Remove(cp);
-                ChangeColorButton_OnClick(this, e);
-            };
-        }
-
         private void ChangeColorButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ColorLabel.Background = new SolidColorBrush(CurrentColor);
+            currentMode = Mode.ChangeColor;
+            CheckButton(sender, e);
+            UpdateEventSetup();
         }
 
         private void RectangleButton_OnClick(object sender, RoutedEventArgs e)
@@ -120,6 +117,13 @@ namespace Painter
 
         }
 
+        private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentMode = Mode.Delete;
+            CheckButton(sender, e);
+            UpdateEventSetup();
+        }
+
         private void AssignEvents()
         {
             EventSetup.SetupEvents();
@@ -148,10 +152,23 @@ namespace Painter
                 case Mode.SetColor:
                     EventSetup = new SetColorEventSetup(MainCanvas);
                     break;
+
+                case Mode.ChangeColor:
+                    EventSetup = new ChangeColorEventSetup(MainCanvas);
+                    break;
+
+                case Mode.Delete:
+                    EventSetup = new DeleteEventSetup(MainCanvas);
+                    break;
             }
             AssignEvents();
 
          }
+
+        public static void OnColorChanged(Label l)
+        {
+            l.Background = new SolidColorBrush(CurrentColor);
+        }
 
         protected static void OnModeChanged()
         {

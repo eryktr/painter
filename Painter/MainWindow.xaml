@@ -30,8 +30,12 @@
                         <Image Source="img/ChangeObjectColor.png" />
                     </Button>
 
-                    <Button Margin="10" Width="50" Height="50" Click="SetColorButton_OnClick">
+                    <Button Margin="10" Width="50" Height="50" Click="ChangeColorButton_OnClick">
                         <Image Source="img/ChangeColorIcon.png" />
+                    </Button>
+
+                    <Button Margin="10" Width="50" Height="50" Click="DeleteButton_OnClick">
+                        <Image Source ="img/DeleteIcon.png"/>
                     </Button>
                 </StackPanel>
                 <StackPanel>

@@ -6,41 +6,41 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace Painter.EventSetups
 {
-    class SetColorEventSetup : IEventSetup
+    class DeleteEventSetup : IEventSetup
     {
         public Canvas Canvas { get; set; }
-        private SetColorEventSetup() { }
+        private DeleteEventSetup() { }
 
-        public SetColorEventSetup(Canvas c)
+        public DeleteEventSetup(Canvas c)
         {
+            MainWindow.ModeChanged += OnModeChanged;
             Canvas = c;
         }
         public void SetupEvents()
         {
             foreach (Shape sh in Canvas.Children)
             {
-                sh.MouseLeftButtonDown += ChangeColor;
+                sh.MouseLeftButtonDown += Delete;
             }
-        }
-
-        public void ChangeColor(object sender, MouseButtonEventArgs e)
-        {
-            if (MainWindow.CurrentMode != Mode.SetColor) return;
-            var sh = (Shape) sender;
-            sh.Fill = new SolidColorBrush(MainWindow.CurrentColor);
         }
 
         public void OnModeChanged(object sender, RoutedEventArgs e)
         {
             foreach (Shape sh in Canvas.Children)
             {
-                sh.MouseLeftButtonDown -= ChangeColor;
+                sh.MouseLeftButtonDown -= Delete;
             }
+        }
+
+        public void Delete(object sender, MouseButtonEventArgs e)
+        {
+            if (MainWindow.CurrentMode != Mode.Delete) return;
+            var sh = (Shape) sender;
+            Canvas.Children.Remove(sh);
         }
     }
 }
